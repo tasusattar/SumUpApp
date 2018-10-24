@@ -8,3 +8,6 @@ To Use:
 4. SumUp Log-in credentials needed the first time.
 5. Choose an amount - first time will ask to connect to a reader using bluetooth.
 6. Pay with the Card Reader.
+
+To Turn On Developer Mode for phone, please see:
+https://developer.android.com/studio/debug/dev-options
