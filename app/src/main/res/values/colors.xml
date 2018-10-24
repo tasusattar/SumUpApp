@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="slctdback">#2eb82e</color>
+    <color name="btnback">#d5d9e0</color>
+    <color name="backlight">#85e085</color>
+
+</resources>
