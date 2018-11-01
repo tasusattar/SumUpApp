@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
             snackmsg += "Payment Confirmed: £" + amount.toString();
             toastmsg += "Thank you!";
             backcolor = Color.rgb(72, 185, 131);
+            screenClick();
         }
 
         Snackbar mysnack = Snackbar.make(MainActivity.this.mainview, snackmsg, Snackbar.LENGTH_SHORT);
@@ -260,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             snackview.setBackgroundColor(backcolor);
         }catch (Exception e){ e.printStackTrace();}
 
-        screenClick();
+//        screenClick();
 
         mysnack.show();
 
