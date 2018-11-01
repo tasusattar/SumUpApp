@@ -9,49 +9,45 @@
     tools:layout_editor_absoluteY="25dp">
 
     <Button
-        android:id="@+id/fivebtn"
+        android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="161dp"
         android:background="@android:drawable/btn_default_small"
-        android:text="@string/five_pound"
-        app:layout_constraintEnd_toEndOf="@+id/fifteenbtn"
-        app:layout_constraintStart_toStartOf="@+id/fifteenbtn"
+        app:layout_constraintEnd_toEndOf="@+id/btn3"
+        app:layout_constraintStart_toStartOf="@+id/btn3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/tenbtn"
+        android:id="@+id/btn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
         android:layout_marginEnd="53dp"
         android:layout_marginRight="53dp"
         android:background="@android:drawable/btn_default_small"
-        android:text="@string/ten_pound"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/fifteenbtn"
+        android:id="@+id/btn3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="63dp"
         android:layout_marginLeft="63dp"
         android:layout_marginBottom="169dp"
         android:background="@android:drawable/btn_default_small"
-        android:text="@string/fifteen_pound"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/twentybtn"
+        android:id="@+id/btn4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="54dp"
         android:layout_marginRight="54dp"
         android:background="@android:drawable/btn_default_small"
-        android:text="@string/twenty_pound"
-        app:layout_constraintBaseline_toBaselineOf="@+id/fifteenbtn"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn3"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView

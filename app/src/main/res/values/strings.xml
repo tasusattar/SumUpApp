@@ -2,10 +2,6 @@
     <string name="app_name">DonationsSumUp</string>
     <string name="select_msg">Please select an amount:</string>
     <string name="selected">The selected amount is: </string>
-    <string name="five_pound">£5</string>
-    <string name="ten_pound">£10</string>
-    <string name="fifteen_pound">£15</string>
-    <string name="twenty_pound">£20</string>
     <string name="approved_snack">Payment Complete: </string>
     <string name="failed_snack">Failed Payment: </string>
 

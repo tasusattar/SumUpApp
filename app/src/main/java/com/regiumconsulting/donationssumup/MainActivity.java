@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,16 +39,19 @@ public class MainActivity extends AppCompatActivity {
     private static final String SECRET = "8718e1644ecab66df485c5a9b33c181aa548d86109393fe3bc8a4ee35a3a7390";
     private static final String RED_URI = "myapp://com.regiumconsulting.donationssumup";
 
-
-    private Button sterling5;
-    private Button sterling10;
-    private Button sterling15;
-    private Button sterling20;
+    private Button sterling1;
+    private Button sterling2;
+    private Button sterling3;
+    private Button sterling4;
     private TextView maintext;
     private ConstraintLayout mainview;
     private Button[] chosenone = new Button[1];
     private Map<Button, BigDecimal> buttons = new HashMap<>();
     private BigDecimal amount;
+    private BigDecimal amnt1;
+    private BigDecimal amnt2;
+    private BigDecimal amnt3;
+    private BigDecimal amnt4;
     private Thread loginthread;
     private Thread paythread;
     private AlertDialog notloggedin;
@@ -60,40 +64,42 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findViews();
+        setBtnAmnt();
         setBGThreads();
         loginthread.start();
+        screenClick();
 
 
         // All Button Clicks
-        // 5 pound button clicked
-        sterling5.setOnClickListener(new View.OnClickListener(){
+        // The first/top-left button clicked
+        sterling1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                btnClick(sterling5);
+                btnClick(sterling1);
             }
         });
 
-        // 10 pound button clicked
-        sterling10.setOnClickListener(new View.OnClickListener(){
+        // The second/top-right button clicked
+        sterling2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                btnClick(sterling10);
+                btnClick(sterling2);
             }
         });
 
-        // 15 pound button clicked
-        sterling15.setOnClickListener(new View.OnClickListener(){
+        // The third/bottom-left button clicked
+        sterling3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                btnClick(sterling15);
+                btnClick(sterling3);
             }
         });
 
-        // 20 pound button clicked
-        sterling20.setOnClickListener(new View.OnClickListener(){
+        // The fourth/bottom-right button clicked
+        sterling4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                btnClick(sterling20);
+                btnClick(sterling4);
             }
         });
 
@@ -114,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     Bundle extra = data.getExtras();
                     if (extra.getInt(SumUpAPI.Response.RESULT_CODE) != 1){
                         Log.d(LOG_TAG, "Could Not Sign In to Sum Up");
+                        notloggedin.show();
                         break;
                     }
                     Log.d(LOG_TAG, String.valueOf(extra.getInt(SumUpAPI.Response.RESULT_CODE)));
@@ -131,9 +138,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
 
-                    Log.i(LOG_TAG, "Payment Succeeded!");
-                    paymentMessage(true);
-
                     Log.d(LOG_TAG, String.valueOf(extra.getInt(SumUpAPI.Response.RESULT_CODE)));
                     Log.d(LOG_TAG, extra.getString(SumUpAPI.Response.MESSAGE));
 
@@ -143,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
 
                     TransactionInfo transactionInfo = extra.getParcelable(SumUpAPI.Response.TX_INFO);
                     Log.d(LOG_TAG, transactionInfo == null ? "" : "Transaction Info: " + transactionInfo);
+
+                    Log.i(LOG_TAG, "Payment Succeeded!");
+                    paymentMessage(true);
 
                 }
                 break;
@@ -161,9 +168,9 @@ public class MainActivity extends AppCompatActivity {
             chosenone[0].setBackgroundResource(android.R.drawable.btn_default_small);
         }
         chosenone[0] = btn;
-        amount = buttons.get(btn);
+        amount = buttons.get(chosenone[0]);
 
-        btn.setBackgroundColor(Color.rgb(37, 219, 131));
+        chosenone[0].setBackgroundColor(Color.rgb(37, 219, 131));
         maintext.setText(R.string.selected);
         maintext.append("  " + amount.toString());
 
@@ -175,7 +182,9 @@ public class MainActivity extends AppCompatActivity {
         maintext.setText(R.string.select_msg);
         if (chosenone[0] != null){
             chosenone[0].setBackgroundResource(android.R.drawable.btn_default);
+            chosenone[0] = null;
         }
+
 
     }
 
@@ -205,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Log.d(LOG_TAG, "NOT LOGGED IN. Cannot prepare checkout");
+            notloggedin.show();
         }
     }
 
@@ -250,6 +260,8 @@ public class MainActivity extends AppCompatActivity {
             snackview.setBackgroundColor(backcolor);
         }catch (Exception e){ e.printStackTrace();}
 
+        screenClick();
+
         mysnack.show();
 
         Toast.makeText(MainActivity.this, toastmsg, Toast.LENGTH_LONG).show();
@@ -262,17 +274,12 @@ public class MainActivity extends AppCompatActivity {
 
     // register all views and alerts
     private void findViews(){
-        sterling5 = findViewById(R.id.fivebtn);
-        sterling10 = findViewById(R.id.tenbtn);
-        sterling15 = findViewById(R.id.fifteenbtn);
-        sterling20 = findViewById(R.id.twentybtn);
+        sterling1 = findViewById(R.id.btn1);
+        sterling2 = findViewById(R.id.btn2);
+        sterling3 = findViewById(R.id.btn3);
+        sterling4 = findViewById(R.id.btn4);
         maintext = findViewById(R.id.maintxt);
         mainview = findViewById(R.id.fullscreen);
-
-        buttons.put(sterling5, new BigDecimal(5));
-        buttons.put(sterling10, new BigDecimal(10));
-        buttons.put(sterling15, new BigDecimal(15));
-        buttons.put(sterling20, new BigDecimal(20));
 
         notloggedin = new AlertDialog.Builder(MainActivity.this).create();
         notloggedin.setTitle("ERROR");
@@ -280,12 +287,36 @@ public class MainActivity extends AppCompatActivity {
         notloggedin.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        loginthread.start();
                         dialog.dismiss();
+                        loginthread.start();
                     }
                 });
 
         Log.i(LOG_TAG, "All Views Found");
+    }
+
+    private void setBtnAmnt(){
+        amnt1 = new BigDecimal(getFloatValue(R.dimen.button1));
+        amnt2 = new BigDecimal(getFloatValue(R.dimen.button2));
+        amnt3 = new BigDecimal(getFloatValue(R.dimen.button3));
+        amnt4 = new BigDecimal(getFloatValue(R.dimen.button4));
+
+        sterling1.setText("£" + amnt1.toString());
+        sterling2.setText("£" + amnt2.toString());
+        sterling3.setText("£" + amnt3.toString());
+        sterling4.setText("£" + amnt4.toString());
+
+        buttons.put(sterling1, amnt1);
+        buttons.put(sterling2, amnt2);
+        buttons.put(sterling3, amnt3);
+        buttons.put(sterling4, amnt4);
+
+    }
+
+    private float getFloatValue(int value){
+        TypedValue outValue = new TypedValue();
+        getResources().getValue(value, outValue, true);
+        return outValue.getFloat();
     }
 
     // Background Threads to handle login and payment
