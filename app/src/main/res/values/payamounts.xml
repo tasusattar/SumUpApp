@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="button1" format="float" type="dimen">5.00</item>
-    <item name="button2" format="float" type="dimen">10.00</item>
-    <item name="button3" format="float" type="dimen">15.00</item>
-    <item name="button4" format="float" type="dimen">20.00</item>
+    <!--Minimum amount must be at least £1.00 -->
+    <string name="button1">0.51</string>
+    <string name="button2">3.27</string>
+    <string name="button3">11.11</string>
+    <string name="button4">2.72</string>
 </resources>

@@ -5,13 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Process;
+//import android.os.Process;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private BigDecimal amnt2;
     private BigDecimal amnt3;
     private BigDecimal amnt4;
-    private Thread loginthread;
-    private Thread paythread;
+//    private Thread loginthread;
+//    private Thread paythread;
     private AlertDialog notloggedin;
 
 
@@ -63,10 +62,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loginSumUp();
         findViews();
         setBtnAmnt();
-        setBGThreads();
-        loginthread.start();
+//        setBGThreads();
+//        loginthread.start();
         screenClick();
 
 
@@ -174,7 +174,9 @@ public class MainActivity extends AppCompatActivity {
         maintext.setText(R.string.selected);
         maintext.append("  " + amount.toString());
 
-        paythread.start();
+        makePayment(amount);
+
+//        paythread.start();
 
     }
 
@@ -289,7 +291,8 @@ public class MainActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        loginthread.start();
+                        loginSumUp();
+//                        loginthread.start();
                     }
                 });
 
@@ -297,15 +300,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBtnAmnt(){
-        amnt1 = new BigDecimal(getFloatValue(R.dimen.button1));
-        amnt2 = new BigDecimal(getFloatValue(R.dimen.button2));
-        amnt3 = new BigDecimal(getFloatValue(R.dimen.button3));
-        amnt4 = new BigDecimal(getFloatValue(R.dimen.button4));
+        amnt1 = new BigDecimal(getString(R.string.button1));
+        amnt2 = new BigDecimal(getString(R.string.button2));
+        amnt3 = new BigDecimal(getString(R.string.button3));
+        amnt4 = new BigDecimal(getString(R.string.button4));
 
-        sterling1.setText("£" + amnt1.toString());
-        sterling2.setText("£" + amnt2.toString());
-        sterling3.setText("£" + amnt3.toString());
-        sterling4.setText("£" + amnt4.toString());
+
+        sterling1.setText(String.format("£ %s", amnt1.toString()));
+        sterling2.setText(String.format("£ %s", amnt2.toString()));
+        sterling3.setText(String.format("£ %s", amnt3.toString()));
+        sterling4.setText(String.format("£ %s", amnt4.toString()));
 
         buttons.put(sterling1, amnt1);
         buttons.put(sterling2, amnt2);
@@ -314,33 +318,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private float getFloatValue(int value){
-        TypedValue outValue = new TypedValue();
-        getResources().getValue(value, outValue, true);
-        return outValue.getFloat();
-    }
-
-    // Background Threads to handle login and payment
-    private void setBGThreads(){
-
-        loginthread = new Thread( new Runnable() {
-            @Override
-            public void run() {
-                android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-                if(!SumUpAPI.isLoggedIn()){
-                    loginSumUp();
-                }
-            }
-        });
-
-        paythread = new Thread( new Runnable() {
-            @Override
-            public void run() {
-                android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-                makePayment(amount);
-            }
-        });
-
-    }
+//    // Background Threads to handle login and payment
+//    private void setBGThreads(){
+//
+//        loginthread = new Thread( new Runnable() {
+//            @Override
+//            public void run() {
+//                android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+//                if(!SumUpAPI.isLoggedIn()){
+//                    loginSumUp();
+//                }
+//            }
+//        });
+//
+//        paythread = new Thread( new Runnable() {
+//            @Override
+//            public void run() {
+//                android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+//                makePayment(amount);
+//                return;
+//            }
+//        });
+//
+//    }
 
 }
